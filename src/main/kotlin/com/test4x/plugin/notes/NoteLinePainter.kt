@@ -16,10 +16,10 @@ class NoteLinePainter : EditorLinePainter() {
     ): MutableCollection<LineExtensionInfo> {
         val service = ServiceManager.getService(project, NotesService::class.java)
         val arrayList = ArrayList<LineExtensionInfo>()
-        service.get(CodeLocation(file.toLocation()!!, lineNumber))?.let {
+        service.get(CodeLocation(file.toLocation(project)!!, lineNumber))?.let {
             val textAttributes = TextAttributes()
             textAttributes.foregroundColor = Color.LIGHT_GRAY
-            arrayList.add(LineExtensionInfo("    $it", textAttributes))
+            arrayList.add(LineExtensionInfo(" ★ $it", textAttributes))
         }
         return arrayList
     }
