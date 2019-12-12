@@ -35,10 +35,15 @@ tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml
     )
 }
 
-tasks.create("renameFile") {
-    val distributions = this.project.buildDir.resolve("distributions")
-    val zip = distributions.listFiles { _, name ->
-        name.contains(".zip")
-    }.first()
-    zip.renameTo(distributions.resolve("notes.zip"))
+tasks.register("buildForGithub") {
+    group = "build"
+    description = "build zip for github"
+    dependsOn("buildPlugin")
+
+    doLast {
+        val distributions = this.project.buildDir.resolve("distributions")
+        distributions.listFiles { _, name ->
+            name.contains(".zip")
+        }?.first()?.copyTo(distributions.resolve("notes.zip"))
+    }
 }

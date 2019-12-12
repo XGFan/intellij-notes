@@ -15,8 +15,8 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Build with Maven
-        run: ./gradlew buildPlugin renameFile
+      - name: Build with Gradle
+        run: ./gradlew buildForGithub
 
       - name: Create Release
         uses: JasonEtco/upload-to-release@master
