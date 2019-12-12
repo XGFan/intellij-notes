@@ -1,0 +1,33 @@
+<idea-plugin>
+    <id>com.test4x.notes</id>
+    <name>notes</name>
+    <vendor email="xuguofan@live.com">XGFan</vendor>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <editor.linePainter implementation="NoteLinePainter"/>
+        <projectService serviceImplementation="NotesService"/>
+    </extensions>
+
+    <!--
+    meta -> control
+    alt -> option
+    control -> command
+    -->
+    <actions>
+        <group id="Notes.Menu" text="Notes" description="Notes menu" popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <action id="edit" class="EditNoteAction" text="Edit">
+                <keyboard-shortcut first-keystroke="shift meta C" keymap="$default"/>
+            </action>
+            <action id="clear" class="ClearNoteAction" text="Clear">
+                <keyboard-shortcut first-keystroke="shift meta X" keymap="$default"/>
+            </action>
+        </group>
+    </actions>
+</idea-plugin>
