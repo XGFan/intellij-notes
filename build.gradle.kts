@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.backend.common.onlyIf
+
 plugins {
     id("org.jetbrains.intellij") version "0.4.15"
     kotlin("jvm") version "1.3.61"
@@ -42,6 +44,8 @@ tasks.register("buildForGithub") {
 
     doLast {
         val distributions = this.project.buildDir.resolve("distributions")
+        distributions.resolve("notes.zip")
+            .onlyIf({ exists() }, File::delete)
         distributions.listFiles { _, name ->
             name.contains(".zip")
         }?.first()?.copyTo(distributions.resolve("notes.zip"))
