@@ -1,3 +1,5 @@
+package com.test4x.plugin.notes
+
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.editor.EditorLinePainter
 import com.intellij.openapi.editor.LineExtensionInfo

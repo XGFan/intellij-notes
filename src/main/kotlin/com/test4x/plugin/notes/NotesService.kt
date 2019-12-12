@@ -1,3 +1,5 @@
+package com.test4x.plugin.notes
+
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.fileEditor.impl.LoadTextUtil
@@ -21,31 +23,31 @@ class NotesService(val project: Project) {
         this.localFile = projectFileSystem.findChild("notes.properties")
             ?: ApplicationManager.getApplication().runWriteAction<VirtualFile> {
                 projectFileSystem.createChildData(
-                    "NotesService",
+                    "com.test4x.plugin.notes.NotesService",
                     "notes.properties"
                 )
             }
         val loadText = LoadTextUtil.loadText(this.localFile)
         loadText.split("\n").forEach {
             val index = it.indexOf("=")
-            if(index!= -1){
+            if (index != -1) {
                 cache[it.substring(0, index)] = it.substring(index + 1)
             }
         }
         //read file
     }
 
-    fun get(location: String, line: Int): String? {
-        return cache["$location:$line"]
+    fun get(codeLocation: CodeLocation): String? {
+        return cache[codeLocation.toText()]
     }
 
-    fun set(location: String, line: Int, doc: String) {
-        cache["$location:$line"] = doc
+    fun set(codeLocation: CodeLocation, doc: String) {
+        cache[codeLocation.toText()] = doc
         saveFile()
     }
 
-    fun clear(location: String, line: Int) {
-        cache.remove("$location:$line")
+    fun clear(codeLocation: CodeLocation) {
+        cache.remove(codeLocation.toText())
         saveFile()
     }
 

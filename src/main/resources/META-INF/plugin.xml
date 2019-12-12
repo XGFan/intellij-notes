@@ -10,8 +10,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <editor.linePainter implementation="NoteLinePainter"/>
-        <projectService serviceImplementation="NotesService"/>
+        <editor.linePainter implementation="com.test4x.plugin.notes.NoteLinePainter"/>
+        <projectService serviceImplementation="com.test4x.plugin.notes.NotesService"/>
     </extensions>
 
     <!--
@@ -22,10 +22,10 @@
     <actions>
         <group id="Notes.Menu" text="Notes" description="Notes menu" popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <action id="edit" class="EditNoteAction" text="Edit">
+            <action id="edit" class="com.test4x.plugin.notes.action.EditNoteAction" text="Edit">
                 <keyboard-shortcut first-keystroke="shift meta C" keymap="$default"/>
             </action>
-            <action id="clear" class="ClearNoteAction" text="Clear">
+            <action id="clear" class="com.test4x.plugin.notes.action.ClearNoteAction" text="Clear">
                 <keyboard-shortcut first-keystroke="shift meta X" keymap="$default"/>
             </action>
         </group>

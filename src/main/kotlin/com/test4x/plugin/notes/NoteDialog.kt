@@ -1,3 +1,5 @@
+package com.test4x.plugin.notes
+
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.editor.impl.DocumentImpl
 import com.intellij.openapi.fileTypes.FileTypes
@@ -9,33 +11,25 @@ import java.awt.Dimension
 import javax.swing.JComponent
 import javax.swing.JPanel
 
-class NoteDialog(val location: String, val line: Int, project: Project) : DialogWrapper(project, true) {
+class NoteDialog(private val codeLocation: CodeLocation, project: Project) : DialogWrapper(project, true) {
 
     private val editorTextField: EditorTextField
     private val service = ServiceManager.getService(project, NotesService::class.java)
 
     init {
-        title = "$location:$line"
+        title = codeLocation.toText()
         editorTextField = EditorTextField(
-            DocumentImpl(service.get(location, line) ?: ""),
+            DocumentImpl(service.get(codeLocation) ?: ""),
             project,
             FileTypes.PLAIN_TEXT,
             false,
             true
-        )
-        // component.getInputMap().put(aKeyStroke, aCommand);
-        // component.getActionMap().put(aCommmand, anAction);
-//        editorTextField.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "SAVE")
-//        editorTextField.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("x"), "SAVE")
-//        editorTextField.actionMap.put("SAVE", object : AbstractAction() {
-//            override fun actionPerformed(e: ActionEvent?) {
-//                println("hello")
-//            }
-//        })
-        editorTextField.preferredSize = Dimension(450, 100)
-        editorTextField.addSettingsProvider {
-            it.settings.isUseSoftWraps = true
-            it.setVerticalScrollbarVisible(false)
+        ).apply {
+            preferredSize = Dimension(450, 100)
+            addSettingsProvider {
+                it.settings.isUseSoftWraps = true  //do not work with oneLineMode
+                it.setVerticalScrollbarVisible(false)
+            }
         }
         init()
     }
@@ -48,7 +42,9 @@ class NoteDialog(val location: String, val line: Int, project: Project) : Dialog
 
     override fun doOKAction() {
         if (editorTextField.text.isNotBlank()) {
-            service.set(location, line, editorTextField.text)
+            service.set(codeLocation, editorTextField.text.trim())
+        } else {
+            service.clear(codeLocation)
         }
         super.doOKAction()
     }
