@@ -30,7 +30,15 @@ tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml
     changeNotes(
         """
       Just Work.<br>
-      <em>shift + control + c 👉 add note</em>
-      <em>shift + control + x 👉 clear note</em>"""
+      shift + control + c 👉 add note <br>
+      shift + control + x 👉 clear note <br>"""
     )
+}
+
+tasks.create("renameFile") {
+    val distributions = this.project.buildDir.resolve("distributions")
+    val zip = distributions.listFiles { _, name ->
+        name.contains(".zip")
+    }.first()
+    zip.renameTo(distributions.resolve("notes.zip"))
 }
