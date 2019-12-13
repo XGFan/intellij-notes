@@ -1,11 +1,11 @@
-name: Latest-Zip
+name: 'latest plugin zip'
 
 on:
   push:
     branches:
       - master
-
-  Build_And_Release:
+jobs:
+  'build and upload':
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
