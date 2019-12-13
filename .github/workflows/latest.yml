@@ -1,0 +1,25 @@
+name: Latest-Zip
+
+on:
+  push:
+    branches:
+      - master
+
+  Build_And_Release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Build with Gradle
+        run: ./gradlew buildForGithub
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: noets.zip
+          path: build/distributions/notes.zip
