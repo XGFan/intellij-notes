@@ -8,19 +8,22 @@ import com.intellij.openapi.vfs.VirtualFile
 
 fun VirtualFile.toLocation(project: Project? = null): String? {
     val path = this.path
-    return if (path.contains("!")) {
-        path.substring(path.indexOf("!") + 1, path.length)
-    } else {
-        val projectFile = project?.projectFile
-        when (projectFile?.name) {
-            "project.ipr" -> { //path/to/project/project.ipr
-                path.drop(projectFile.parent.path.length)
+    return when {
+        path.contains("!") -> {
+            path.substring(path.indexOf("!") + 1, path.length)
+        }
+        else -> {
+            val projectFile = project?.projectFile
+            val projectDir = when (projectFile?.name) {
+                //path/to/project/project.ipr
+                "project.ipr" -> projectFile.parent.path
+                //path/to/project/.idea/misc.xml
+                "misc.xml" -> projectFile.parent.parent.path
+                else -> ""
             }
-            "misc.xml" -> { //path/to/project/.idea/misc.xml
-                path.drop(projectFile.parent.parent.path.length)
-            }
-            else -> {
-                path
+            when {
+                path.startsWith(projectDir) -> path.drop(projectDir.length)
+                else -> path
             }
         }
     }

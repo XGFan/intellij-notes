@@ -15,7 +15,7 @@ class NotesService(project: Project) {
         }
     }
 
-    var lastTimestamp = System.currentTimeMillis() - 50 * 1000
+    private var lastTimestamp = System.currentTimeMillis() - 50 * 1000
     private val cache = ConcurrentHashMap<String, String>()
     private val localFile: VirtualFile
 
