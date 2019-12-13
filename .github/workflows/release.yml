@@ -1,11 +1,11 @@
-name: Release
+name: release
 
 on:
   release:
     types: [published]
 
 jobs:
-  Build_And_Release:
+  build_and_release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
