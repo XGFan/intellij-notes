@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>com.test4x.notes</id>
-    <name>notes</name>
+    <id>com.test4x</id>
+    <name>bookmark+</name>
     <vendor email="xuguofan@live.com">XGFan</vendor>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -10,8 +10,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <editor.linePainter implementation="com.test4x.plugin.notes.NoteLinePainter"/>
-        <projectService serviceImplementation="com.test4x.plugin.notes.NotesService"/>
+        <editor.linePainter implementation="com.test4x.plugin.notes.DescriptionPainter"/>
     </extensions>
 
     <!--
@@ -20,14 +19,9 @@
     control -> command
     -->
     <actions>
-        <group id="Notes.Menu" text="Notes" description="Notes menu" popup="true">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <action id="edit" class="com.test4x.plugin.notes.action.EditNoteAction" text="Edit">
-                <keyboard-shortcut first-keystroke="shift meta C" keymap="$default"/>
-            </action>
-            <action id="clear" class="com.test4x.plugin.notes.action.ClearNoteAction" text="Clear">
-                <keyboard-shortcut first-keystroke="shift meta X" keymap="$default"/>
-            </action>
-        </group>
+        <action id="BookmarkWithDescription" class="com.test4x.plugin.notes.action.EditNoteAction">
+            <keyboard-shortcut first-keystroke="shift meta C" keymap="$default"/>
+            <add-to-group group-id="GutterMenuBookmarks" anchor="before" relative-to-action="ToggleBookmark"/>
+        </action>
     </actions>
 </idea-plugin>

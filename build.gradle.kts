@@ -18,7 +18,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = "2020.1"
+    version = "LATEST-EAP-SNAPSHOT"
 }
 tasks {
     compileKotlin {
@@ -32,8 +32,8 @@ tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml
     changeNotes(
         """
       Just Work.<br>
-      shift + control + c 👉 add note <br>
-      shift + control + x 👉 clear note <br>"""
+      shift + control + c 👉 Set bookmark with Descritpion <br>
+      show bookmark description in the editor<br>"""
     )
 }
 
@@ -44,10 +44,10 @@ tasks.register("buildForGithub") {
 
     doLast {
         val distributions = this.project.buildDir.resolve("distributions")
-        distributions.resolve("notes.zip")
+        distributions.resolve("bookmarkplus.zip")
             .onlyIf({ exists() }, File::delete)
         distributions.listFiles { _, name ->
             name.contains(".zip")
-        }?.first()?.copyTo(distributions.resolve("notes.zip"))
+        }?.first()?.copyTo(distributions.resolve("bookmarkplus.zip"))
     }
 }
