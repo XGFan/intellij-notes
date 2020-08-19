@@ -35,6 +35,7 @@ tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml
       shift + control + c 👉 Set bookmark with Descritpion <br>
       show bookmark description in the editor<br>"""
     )
+    setSinceBuild("183")
 }
 
 tasks.register("buildForGithub") {
